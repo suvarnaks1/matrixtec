@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ContactScreen extends StatelessWidget {
+class ContactScreen extends StatefulWidget {
+  @override
+  State<ContactScreen> createState() => _ContactScreenState();
+}
+
+class _ContactScreenState extends State<ContactScreen> {
+  var isHover = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,19 +35,32 @@ class ContactScreen extends StatelessWidget {
             SizedBox(height: 10),
             buildTextField("Your Message", Icons.message),
             SizedBox(height: 20),
-            SizedBox(
-              height: 50,
-              width: 150,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.pink,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+            MouseRegion(
+              onHover: (event) {
+                setState(() {
+                  isHover = true;
+                });
+              },
+              onExit: (event) {
+                setState(() {
+                  isHover = false;
+                });
+              },
+              child: SizedBox(
+                height: 50,
+                width: 150,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        isHover ? AppColors.pink : AppColors.robinEdgeBlue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  child: Text("Send Me", style: TextStyle(color: Colors.white)),
                 ),
-                child: Text("Send Me", style: TextStyle(color: Colors.white)),
               ),
             ),
             SizedBox(height: 20),
@@ -55,8 +74,10 @@ class ContactScreen extends StatelessWidget {
               children: [
                 socialIcon(Icons.phone, "Phone", ""),
                 socialIcon(Icons.email, "Email", "mailto:dotdart18@gmail.com"),
-                socialIcon(Icons.camera_alt, "Instagram", "https://www.instagram.com/dot_dart__/"),
-                socialIcon(Icons.business, "LinkedIn", "https://www.linkedin.com/in/dot-dart-582519351"),
+                socialIcon(Icons.camera_alt, "Instagram",
+                    "https://www.instagram.com/dot_dart__/"),
+                socialIcon(Icons.business, "LinkedIn",
+                    "https://www.linkedin.com/in/dot-dart-582519351"),
                 socialIcon(Icons.apple, "X", ""),
               ],
             ),
